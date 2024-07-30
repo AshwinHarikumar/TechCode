@@ -130,7 +130,7 @@ const Books = () => {
       <Box
         sx={{
           padding: 2,
-          marginTop: 8,
+          marginTop: '80px', // Adjust margin to place below the navbar
           display: 'flex',
           flexWrap: 'wrap',
           gap: 3, // Space between cards
@@ -140,14 +140,20 @@ const Books = () => {
         {documents.map((document) => (
           <Card 
             key={document._id}
-            sx={{ backgroundColor:'transparent',position: 'relative', maxWidth: 240, margin: 2, marginTop: 7, marginRight: '35px',transition: 'transform 0.2s ease-in-out', // Add transition
+            sx={{ 
+              backgroundColor: 'transparent', 
+              position: 'relative', 
+              maxWidth: 240, 
+              margin: 2, 
+              transition: 'transform 0.2s ease-in-out', // Add transition
               '&:hover': {
                 transform: 'scale(1.05)', // Add hover effect
-              } }}
+              } 
+            }}
           >
             <CardMedia
               component="img"
-                    height="140"
+              height="140"
               image={document.image || 'https://via.placeholder.com/300'}
               alt="Document"
               sx={{ width: '100%', height: '45vh' }}
