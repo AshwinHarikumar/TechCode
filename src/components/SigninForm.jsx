@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./SigninForm.css";
-import SignIn from "./Signin";
+import SignIn from "./SignIn";
 import SignUp from "./Signup";
 
 export default function SigninForm() {
@@ -37,7 +37,7 @@ export default function SigninForm() {
               className="overlay-panel overlay-right"
               style={{ color: "black" }}
             >
-              <h1>Hello, Friend!</h1>
+              <h1>Hello, Friends!</h1>
               <p>Enter your personal details and start your journey with us</p>
               <button
                 className="ghost"
