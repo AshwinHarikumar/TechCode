@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 const Programs = () => {
   return (
     <div>
-        <Typography>this is the program page</Typography>
+        <Typography>this is the program </Typography>
       
     </div>
   )
