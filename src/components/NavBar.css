@@ -1,0 +1,45 @@
+/* NavBar.css */
+.navbar {
+    /* background: linear-gradient(to left, #0fA4AF, #003842); */
+    background-color: aliceblue;
+    box-shadow: none;
+    padding: 0 1rem; /* Add padding to make room for the logo */
+  }
+  
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .menuButton {
+    margin-right: 1rem;
+  }
+  
+  .logo {
+    height: 40px; /* Adjust size as needed */
+    margin-right: 1rem;
+  }
+  
+  .title {
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+  
+  .menuItems {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navButton {
+    margin-left: 1rem;
+  }
+  
+  .popoverContent {
+    padding: 1rem;
+  }
+  
+  .popoverItem {
+    color: #0fA4AF;
+  }
+  

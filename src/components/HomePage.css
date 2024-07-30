@@ -1,0 +1,49 @@
+/* HomePage.css */
+
+.root {
+    background-size: cover;
+    min-height: 100vh;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.styledPaper {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.6); /* More translucent background */
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+    border-radius: 20px; /* Rounded corners */
+    width: 100%;
+    max-width: 800px; /* Maximum width for larger screens */
+}
+
+.gridItem {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.6); /* More translucent background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gridItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 25px rgba(0,0,0,0.15);
+}
+
+.styledTypography {
+    color: #333;
+}
+
+.styledButton {
+    background: #0FA4AF;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-transform: none;
+}
+
+.styledButton:hover {
+    background: #0F8F9A;
+}
