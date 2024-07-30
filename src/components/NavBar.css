@@ -42,4 +42,15 @@
   .popoverItem {
     color: #0fA4AF;
   }
+
+  .drawerItem {
+    color: white; /* Set text color for the items */
+}
+
+.drawerItem:hover {
+    background-color: #f0f0f0; /* Optional: Add a hover effect */
+}
+.MuiListItemText-root {
+  color: white; /* Ensure text color inside ListItemText is white */
+}
   
