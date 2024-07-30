@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Popover, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import './NavBar.css';
 import logo from '../assets/logo.png'
@@ -11,10 +11,20 @@ const Navbar = () => {
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const navigate = useNavigate();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  const programopen = ()=>{
+    navigate('/Programs')
+  }
+  const notesopen =()=>{
+    navigate('/Notes')
+  }
+  const booksopen =()=>{
+    navigate('/Books')
+  }
 
   return (
     <AppBar position="fixed" className="navbar"sx={{backgroundColor:'rgba(0,0,0,0.8)'}}>
@@ -48,9 +58,9 @@ const Navbar = () => {
         className="popoverContent"
       >
         <MenuItem className="popoverItem" component={Link} to="/" onClick={handleMenuClose}>Home</MenuItem>
-        <MenuItem className="popoverItem" component={Link} to="/books" onClick={handleMenuClose}>Books</MenuItem>
-        <MenuItem className="popoverItem" component={Link} to="/programs" onClick={handleMenuClose}>Programs</MenuItem>
-        <MenuItem className="popoverItem" component={Link} to="/notes" onClick={handleMenuClose}>Notes</MenuItem>
+        <MenuItem className="popoverItem" component={Link} to="/books" onClick={booksopen}>Books</MenuItem>
+        <MenuItem className="popoverItem" component={Link} to="/programs" onClick={ programopen }>Programs</MenuItem>
+        <MenuItem className="popoverItem" component={Link} to="/notes" onClick={notesopen}>Notes</MenuItem>
       </Popover>
     </AppBar>
   );
