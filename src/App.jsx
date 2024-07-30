@@ -7,6 +7,7 @@ import About from './components/About';
 import Programs from './components/Programs';
 import Notes from './components/Notes';
 import Books from './components/Books';
+import Admin from './components/Admin';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/programs" element={<Programs/>} />
         <Route path="/notes" element={<Notes/>} />
         <Route path="/books" element={<Books/>} />
+        <Route path="/admin" element={<Admin/>} />
       </Routes>
     </Router>
   );
