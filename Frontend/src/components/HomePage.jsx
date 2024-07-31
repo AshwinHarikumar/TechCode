@@ -11,7 +11,7 @@ const HomePage = () => {
             Welcome to TechCodeHub
           </Typography>
           <Typography variant="body1" gutterBottom className="styledDescription">
-            Your go-to place for the latest E-Books, code snippets, and tech news. Whether you are a beginner or an experienced developer, we have something for everyone.
+            Your go-to place for the latest E-Books, Code snippets, and Tech news. Whether you are a Beginner or an Experienced Developer, We Have Something For Everyone.
           </Typography>
           <Grid container spacing={4} sx={{ marginTop: '2rem' ,}}>
             <Grid item xs={12} sm={6}>
