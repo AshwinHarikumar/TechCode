@@ -16,16 +16,16 @@ import ManageBooks from './components/Admin/ManageBook';
 const App = () => {
   return (
     <Router>
-      <NavBar />
+     
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<><NavBar /><HomePage /></>} />
         <Route path="/signin" element={<SigninForm />} />
         <Route path="/signup" element={<SigninForm />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/programs" element={<Programs/>} />
-        <Route path="/notes" element={<Notes/>} />
-        <Route path="/books" element={<Books/>} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/about" element={<><NavBar /><About /></>} />
+        <Route path="/programs" element={<><NavBar /><Programs/></>} />
+        <Route path="/notes" element={<><NavBar /><Notes/></>} />
+        <Route path="/books" element={<><NavBar /><Books/></>} />
+        <Route path="/admin" element={<><NavBar /><Admin/></>} />
         <Route path="/userprofile" element={<UserProfile/>} />
         <Route path="/manage-users" element={<ManageUsers/>} />
         <Route path="/manage-books" element={<ManageBooks/>} />
