@@ -128,6 +128,8 @@ app.post('/signup', async (req, res) => {
 // Document routes
 app.use('/api/documents', documentRoutes);
 
+
+
 // Admin-specific routes for user management
 app.get('/admin/users', async (req, res) => {
   try {
