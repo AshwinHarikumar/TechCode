@@ -1,7 +1,6 @@
-/* HomePage.css */
-
+/* General root styles */
 .root {
-    background-size: cover;
+    /* background: linear-gradient(135deg, #0f4c75, #00a8cc); Gradient blue background */
     min-height: 100vh;
     padding: 2rem 0;
     display: flex;
@@ -9,41 +8,64 @@
     align-items: center;
 }
 
+/* Container styles */
+/* Container styles */
+.styledcontainer {
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly darker semi-transparent black for contrast */
+    padding: 2rem;
+    border-radius: 10px; /* Slightly rounded corners for a modern look */
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.4); /* Enhanced shadow for depth */
+}
+
+/* Paper component styles */
 .styledPaper {
     padding: 2rem;
     text-align: center;
-    background: rgba(255, 255, 255, 0.6); /* More translucent background */
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
-    border-radius: 20px; /* Rounded corners */
+    background: rgba(0, 0, 0, 0.85); /* Very dark semi-transparent black for high contrast */
+    color: #000000; /* Black text color for high readability */
+    box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.5); /* Stronger shadow for more depth */
+    border-radius: 15px; /* Consistent rounded corners */
     width: 100%;
-    max-width: 800px; /* Maximum width for larger screens */
+    max-width: 900px; /* Slightly wider maximum width for larger screens */
 }
 
+/* Typography styles */
+.styledTitle {
+    color: #000000; /* Black for the title */
+    font-weight: 700; /* Bold for emphasis */
+    margin-bottom: 1rem; /* Space below the title */
+    font-size: 2.5rem; /* Larger font size for impact */
+    text-align: center;
+}
+
+.styledDescription {
+    color: #000000; /* Black for the description */
+    margin-bottom: 2rem; /* Space below the description */
+    font-size: 1.2rem; /* Slightly larger font size for readability */
+}
+
+/* Grid item styles */
 .gridItem {
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.6); /* More translucent background */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 15px; /* Rounded corners for a modern look */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
+    background-color: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background for contrast */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .gridItem:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 25px rgba(0,0,0,0.15);
+    transform: translateY(-8px); /* More pronounced lift effect */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
 }
 
-.styledTypography {
-    color: #333;
+/* Section title and description styles */
+.styledSectionTitle {
+    color: #000000; /* Black for section titles */
+    font-weight: 600; /* Semi-bold for emphasis */
+    margin-bottom: 0.5rem; /* Space below the section title */
+    font-size: 1.5rem; /* Slightly larger font size for titles */
 }
 
-.styledButton {
-    background: #0FA4AF;
-    color: #fff;
-    border-radius: 20px;
-    padding: 10px 20px;
-    text-transform: none;
-}
-
-.styledButton:hover {
-    background: #0F8F9A;
+.styledSectionDescription {
+    color: #000000; /* Black for section descriptions */
+    font-size: 1.1rem; /* Slightly larger font size for descriptions */
 }
