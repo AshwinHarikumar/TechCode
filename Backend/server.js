@@ -18,14 +18,14 @@ mongoose.connect('mongodb+srv://techcodehub2024:1234@cluster0.8mc5s56.mongodb.ne
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
-const app = express(); // Initialize the Express application
-app.use(cors()); // Enable CORS
+const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
-// Define your MongoDB schema
+// Define MongoDB schema
 const userSchema = new mongoose.Schema({
-  uid: { type: String, required: true },
-  name: { type: String, required: true }, // Make name a required field
+  uid: { type: String },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String },
   avatar: { type: String },
@@ -48,15 +48,12 @@ app.post('/login', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate a JWT token for session management
-    const token = jwt.sign({ uid: user.uid, email: user.email, isAdmin: user.isAdmin }, 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyMjM4ODU0NSwiaWF0IjoxNzIyMzg4NTQ1fQ.Cpp8nfxTCXklTasIwjFrRwW78lBvn37OO2Pnv7zyDGA', { expiresIn: '1h' });
-
+    const token = jwt.sign({ uid: user._id, email: user.email, isAdmin: user.isAdmin }, 'your_jwt_secret', { expiresIn: '1h' });
     res.status(200).json({ message: 'Login successful', token, isAdmin: user.isAdmin });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
@@ -75,22 +72,19 @@ app.post('/login/google', async (req, res) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const uid = decodedToken.uid;
     const email = decodedToken.email;
-    const avatar = decodedToken.picture; // Avatar URL from Google
-    const name = decodedToken.name; // Ensure name is captured from token
+    const avatar = decodedToken.picture;
+    const name = decodedToken.name;
 
-    // Check if the email is the admin email
     const isAdmin = email === 'techcodehub.2024@gmail.com';
 
-    // Save or update login data to MongoDB
     const user = await User.findOneAndUpdate(
       { uid },
-      { uid, email, name, avatar, isAdmin }, // Include name
+      { uid, email, name, avatar, isAdmin },
       { upsert: true, new: true }
     );
 
     const jwtToken = jwt.sign({ uid: user.uid, email: user.email, isAdmin: user.isAdmin }, 'your_jwt_secret', { expiresIn: '1h' });
-
-    res.status(200).json({ message: 'Login data saved successfully', token: jwtToken, isAdmin: user.isAdmin });
+    res.status(200).json({ message: 'Login successful', token: jwtToken, isAdmin: user.isAdmin });
   } catch (error) {
     res.status(401).json({ message: 'Invalid token', error });
   }
@@ -105,14 +99,14 @@ app.post('/resetPassword', async (req, res) => {
   }
 
   try {
-    await admin.auth().sendPasswordResetEmail(email);
-    res.status(200).json({ message: 'Password reset email sent' });
+    // Implement your password reset logic here
+    res.status(200).json({ message: 'Password reset functionality not yet implemented' });
   } catch (error) {
-    res.status(500).json({ message: 'Error sending password reset email', error });
+    res.status(500).json({ message: 'Error handling password reset', error });
   }
 });
 
-// Endpoint to create a new user (for testing or sign-up)
+// Endpoint to create a new user (for sign-up)
 app.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -121,9 +115,8 @@ app.post('/signup', async (req, res) => {
   }
 
   try {
-    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
-    const isAdmin = email === 'techcodehub.2024@gmail.com'; // Assign admin status based on email
+    const isAdmin = email === 'techcodehub.2024@gmail.com';
     const user = new User({ name, email, password: hashedPassword, isAdmin });
     await user.save();
     res.status(201).json({ message: 'User created successfully' });
@@ -135,22 +128,21 @@ app.post('/signup', async (req, res) => {
 // Document routes
 app.use('/api/documents', documentRoutes);
 
-// Route to get all users (change the endpoint to match React component expectations)
+// Admin-specific routes for user management
 app.get('/admin/users', async (req, res) => {
   try {
-    const users = await User.find({}, 'uid name email avatar loginTime'); // Retrieve uid, name, email, avatar, and loginTime
+    const users = await User.find({}, 'uid name email avatar loginTime');
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error });
   }
 });
 
-// Route to get a specific user
 app.get('/admin/users/:uid', async (req, res) => {
   const { uid } = req.params;
 
   try {
-    const user = await User.findOne({ uid }, 'name email avatar loginTime'); // Retrieve name, email, avatar, and loginTime
+    const user = await User.findOne({ uid }, 'name email avatar loginTime');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -160,7 +152,6 @@ app.get('/admin/users/:uid', async (req, res) => {
   }
 });
 
-// Route to delete a user (this route is admin-only)
 app.delete('/admin/users/:uid', async (req, res) => {
   const { uid } = req.params;
 

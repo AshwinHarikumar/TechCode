@@ -76,7 +76,7 @@ function SignIn() {
       } else {
         navigate('/'); // Redirect to user page
       }
-      alert(`You are logged in with email: ${email}`);
+      // alert(`You are logged in with email: ${email}`);
       setState({
         email: '',
         password: '',

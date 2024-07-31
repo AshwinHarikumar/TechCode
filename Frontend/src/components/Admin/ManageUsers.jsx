@@ -59,7 +59,15 @@ function ManageUsers() {
               {googleLogins.map((user) => (
                 <tr key={user.uid}> {/* Ensure uid is unique */}
                   <td>
-                    {user.avatar ? <img src={user.avatar} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> : 'No avatar'}
+                    {user.avatar ? (
+                      <img 
+                        src={user.avatar} 
+                        alt="Avatar" 
+                        style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover' }} 
+                      />
+                    ) : (
+                      <span>No avatar</span>
+                    )}
                   </td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
