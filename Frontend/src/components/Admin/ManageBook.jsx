@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Button, TextField, Box, Dialog, DialogTitle, DialogContent, DialogActions, Typography, Card, CardContent, CardActions, CardMedia } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Navbar2 from './NavBar2';
 
 const ManageBooks = () => {
   // State and effect hooks
@@ -116,21 +117,7 @@ const ManageBooks = () => {
 
   return (
     <div>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-        sx={{ position: 'fixed', bottom: 30, right: 16 }}
-      >
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: 'rgba(0,0,0,0.8)', '&:hover': { backgroundColor: 'rgba(0,0,0,0.9)' } }}
-          onClick={handleClickOpenAdd}
-          endIcon={<AddIcon />}
-        >
-          Add Your Contribution
-        </Button>
-      </Box>
+      <Navbar2 onAddClick={handleClickOpenAdd} />
 
       {/* Add Document Dialog */}
       <Dialog open={openAdd} onClose={handleCloseAdd}>
@@ -249,7 +236,7 @@ const ManageBooks = () => {
       <Box
         sx={{
           padding: 2,
-          marginTop: '80px', // Adjust margin to place below the navbar
+          marginTop: '500px', // Adjust margin to place below the navbar
           display: 'flex',
           flexWrap: 'wrap',
           gap: 3, // Space between cards
