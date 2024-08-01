@@ -21,7 +21,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Navbar3 from './NavBar3';
 
-const CPage = () => {
+const PythonPage = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [code, setCode] = useState('');
@@ -38,7 +38,7 @@ const CPage = () => {
     useEffect(() => {
         const fetchPrograms = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/c-programs');
+                const response = await axios.get('http://localhost:3000/python-programs');
                 setPrograms(response.data);
             } catch (error) {
                 console.error('Error fetching programs:', error);
@@ -55,11 +55,11 @@ const CPage = () => {
         try {
             if (selectedProgram) {
                 // Update existing program
-                await axios.put(`http://localhost:3000/c-programs/${selectedProgram._id}`, programData);
+                await axios.put(`http://localhost:3000/python-programs/${selectedProgram._id}`, programData);
                 setSnackbarMessage('Program updated successfully!');
             } else {
                 // Add new program
-                await axios.post('http://localhost:3000/c-programs', programData);
+                await axios.post('http://localhost:3000/python-programs', programData);
                 setSnackbarMessage('Program added successfully!');
             }
             setSnackbarSeverity('success');
@@ -72,7 +72,7 @@ const CPage = () => {
             setDialogOpen(false); // Close dialog
             setAddProgramDialogOpen(false); // Close add program dialog
             // Fetch updated list
-            const response = await axios.get('http://localhost:3000/c-programs');
+            const response = await axios.get('http://localhost:3000/python-programs');
             setPrograms(response.data);
         } catch (error) {
             setSnackbarMessage('Error saving program!');
@@ -92,12 +92,12 @@ const CPage = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/c-programs/${id}`);
+            await axios.delete(`http://localhost:3000/python-programs/${id}`);
             setSnackbarMessage('Program deleted successfully!');
             setSnackbarSeverity('success');
             setOpenSnackbar(true);
             // Fetch updated list
-            const response = await axios.get('http://localhost:3000/c-programs');
+            const response = await axios.get('http://localhost:3000/python-programs');
             setPrograms(response.data);
         } catch (error) {
             setSnackbarMessage('Error deleting program!');
@@ -128,22 +128,20 @@ const CPage = () => {
         <>
             <Navbar3 onAddClick={handleAddProgramButtonClick} />
             <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100vh', // Make the container fill the full height
-                padding: '16px',
-                boxSizing: 'border-box'
+                padding: '24px',
+                minHeight: '100vh',
+                marginTop: '200px',
             }}>
-                <Grid container spacing={1} style={{ flexGrow: 1, overflowY: 'auto' }}>
+                <Grid container spacing={4}>
                     {programs.map((program) => (
-                        <Grid item xs={12} sm={6} md={4}mt={7} key={program._id}>
+                        <Grid item xs={12} sm={6} md={4} key={program._id}>
                             <Card style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 padding: '16px',
                                 boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
                                 borderRadius: '20px',
-                                height: '100%', // Ensure cards fill the available space
+                                minWidth: '500px',
                                 transition: 'transform 0.2s',
                                 cursor: 'pointer',
                                 ':hover': {
@@ -246,9 +244,9 @@ const CPage = () => {
                                         label="Code"
                                         variant="outlined"
                                         fullWidth
-                                        multiline
-                                        rows={4}
                                         margin="normal"
+                                        multiline
+                                        rows={6}
                                         value={code}
                                         onChange={(e) => setCode(e.target.value)}
                                         required
@@ -259,33 +257,29 @@ const CPage = () => {
                                         label="Algorithm"
                                         variant="outlined"
                                         fullWidth
+                                        margin="normal"
                                         multiline
                                         rows={4}
-                                        margin="normal"
                                         value={algorithm}
                                         onChange={(e) => setAlgorithm(e.target.value)}
                                         required
                                     />
                                 </Grid>
                             </Grid>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                                <Button
+                                    onClick={handleDialogClose}
+                                    variant="outlined"
+                                    color="secondary"
+                                    style={{ marginRight: '8px' }}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleSubmit} variant="contained" color="primary">
+                                    {selectedProgram ? 'Update' : 'Add'}
+                                </Button>
+                            </div>
                         </DialogContent>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '16px' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSubmit}
-                                style={{ marginRight: '8px' }}
-                            >
-                                {selectedProgram ? 'Update Program' : 'Add Program'}
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleDialogClose}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
                     </Dialog>
                 )}
             </div>
@@ -293,4 +287,4 @@ const CPage = () => {
     );
 };
 
-export default CPage;
+export default PythonPage;

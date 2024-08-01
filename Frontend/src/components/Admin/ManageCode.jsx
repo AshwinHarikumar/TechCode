@@ -10,7 +10,7 @@ const ManageCode = () => {
   };
 
   const handleManagePython = () => {
-    navigate('/manage-books');
+    navigate('/pypage');
   };
 
   const handleManageJava = () => {

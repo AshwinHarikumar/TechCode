@@ -16,6 +16,7 @@ import CMenu from './components/CMenu';
 import PythonMenu from './components/PythonMenu';
 import JavaMenu from './components/JavaMenu';
 import CPage from './components/Admin/Cprogram';
+import PythonPage from './components/Admin/PythonPrgm';
 
 
 
@@ -41,6 +42,8 @@ const App = () => {
         <Route path="/python" element={<PythonMenu/>} /> 
         <Route path="/java" element={<JavaMenu/>} /> 
         <Route path="/cpage" element={<CPage/>} /> 
+        <Route path="/pypage" element={<PythonPage/>} /> 
+        
     
 
       </Routes>
