@@ -25,6 +25,8 @@ import HomePageUser from './components/User/Home-User';
 import Navbar3 from './components/Admin/NavBar3';
 import Navbar2 from './components/Admin/NavBar2';
 import NavbarAdmin from './components/Admin/NavBarAdmin';
+import JavaPage from './components/Admin/JavaPrgm';
+import TechNews from './components/TechNews';
 
 
 
@@ -39,7 +41,7 @@ const App = () => {
         <Route path="/signup" element={<SigninForm />} />
         <Route path="/about" element={<><NavBar /><About /></>} />
         <Route path="/programs" element={<><NavBar /><Programs/></>} />
-        <Route path="/notes" element={<><NavBar /><Notes/></>} />
+        <Route path="/technews" element={<><NavBar /><TechNews/></>} />
         <Route path="/books" element={<><NavBar /><Books/></>} />
         <Route path="/admin" element={<><NavbarAdmin/><Admin/></>} />
         <Route path="/userprofile" element={<UserProfile/>} />
@@ -51,6 +53,8 @@ const App = () => {
         <Route path="/java" element={<JavaMenu/>} /> 
         <Route path="/cpage" element={<CPage/>} /> 
         <Route path="/pypage" element={<PythonPage/>} /> 
+        <Route path="/javapage" element={<JavaPage/>} /> 
+        
         <Route path="/homeuser" element={<HomePageUser/>} /> 
         <Route path="/programsuser" element={<><NavbarUser /><ProgramsUser/></>} />
         <Route path="/notesuser" element={<><NavbarUser /><NotesUser/></>} />

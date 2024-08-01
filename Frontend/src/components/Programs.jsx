@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button, Box, Grid } from '@mui/material';
 import CMenu from './CMenu'; // Import CMenu component
 import PythonMenu from './PythonMenu'; // Import PythonMenu component
+import JavaMenu from './JavaMenu';
 
 const Programs = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('');
@@ -17,7 +18,7 @@ const Programs = () => {
             case 'Python':
                 return <PythonMenu />; // Render PythonMenu component for Python programs
             case 'JAVA':
-                return <Typography sx={{ color: 'black' }}>Code for JAVA</Typography>;
+                return <JavaMenu />;
             default:
                 return  <CMenu />; 
         }

@@ -14,7 +14,7 @@ const ManageCode = () => {
   };
 
   const handleManageJava = () => {
-    navigate('/manage-programs');
+    navigate('/javapage');
   };
 
   
