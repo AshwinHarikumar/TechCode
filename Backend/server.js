@@ -7,13 +7,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const documentRoutes = require('./routes/documents');
 
-// Firebase Admin SDK initialization
+
+// Initialize Firebase Admin SDK
 const serviceAccount = require('./serviceAccountKey.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-// MongoDB connection
+// Connect to MongoDB
 mongoose.connect('mongodb+srv://techcodehub2024:1234@cluster0.8mc5s56.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB', err));
@@ -22,7 +23,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Define MongoDB schema
+// Define MongoDB schema for users
 const userSchema = new mongoose.Schema({
   uid: { type: String },
   name: { type: String, required: true },
@@ -33,6 +34,15 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false }
 });
 const User = mongoose.model('User', userSchema);
+
+// Define MongoDB schema for C programs
+const cProgramSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  code: { type: String, required: true },
+  algorithm: { type: String, required: true }, // New field for algorithm
+});
+const CProgram = mongoose.model('CProgram', cProgramSchema);
 
 // Endpoint to handle email and password login
 app.post('/login', async (req, res) => {
@@ -70,11 +80,7 @@ app.post('/login/google', async (req, res) => {
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    const uid = decodedToken.uid;
-    const email = decodedToken.email;
-    const avatar = decodedToken.picture;
-    const name = decodedToken.name;
-
+    const { uid, email, picture: avatar, name } = decodedToken;
     const isAdmin = email === 'techcodehub.2024@gmail.com';
 
     const user = await User.findOneAndUpdate(
@@ -99,7 +105,7 @@ app.post('/resetPassword', async (req, res) => {
   }
 
   try {
-    // Implement your password reset logic here
+    // Implement password reset functionality here
     res.status(200).json({ message: 'Password reset functionality not yet implemented' });
   } catch (error) {
     res.status(500).json({ message: 'Error handling password reset', error });
@@ -124,11 +130,81 @@ app.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
-
 // Document routes
 app.use('/api/documents', documentRoutes);
 
+// Endpoint to get all C programs
+app.get('/c-programs', async (req, res) => {
+  try {
+    const programs = await CProgram.find();
+    res.status(200).json(programs);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching C programs', error });
+  }
+});
 
+// Endpoint to get a specific C program by ID
+app.get('/c-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await CProgram.findById(id);
+    if (!program) {
+      return res.status(404).json({ message: 'C program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching C program', error });
+  }
+});
+
+// Endpoint to add a new C program
+app.post('/c-programs', async (req, res) => {
+  const { title, description, code, algorithm } = req.body;
+
+  if (!title || !description || !code || !algorithm) {
+    return res.status(400).json({ message: 'Title, description, code, and algorithm required' });
+  }
+
+  try {
+    const newProgram = new CProgram({ title, description, code, algorithm });
+    await newProgram.save();
+    res.status(201).json(newProgram);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating C program', error });
+  }
+});
+
+// Endpoint to update a C program
+app.put('/c-programs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, description, code, algorithm } = req.body;
+
+  try {
+    const program = await CProgram.findByIdAndUpdate(id, { title, description, code, algorithm }, { new: true });
+    if (!program) {
+      return res.status(404).json({ message: 'C program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating C program', error });
+  }
+});
+
+// Endpoint to delete a C program
+app.delete('/c-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await CProgram.findByIdAndDelete(id);
+    if (!program) {
+      return res.status(404).json({ message: 'C program not found' });
+    }
+    res.status(200).json({ message: 'C program deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting C program', error });
+  }
+});
 
 // Admin-specific routes for user management
 app.get('/admin/users', async (req, res) => {

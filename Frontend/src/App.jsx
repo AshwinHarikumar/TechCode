@@ -12,6 +12,12 @@ import UserProfile from './components/UserProfile';
 import ManageUsers from './components/Admin/ManageUsers';
 import ManageBooks from './components/Admin/ManageBook';
 import ManageCode from './components/Admin/ManageCode';
+import CMenu from './components/CMenu';
+import PythonMenu from './components/PythonMenu';
+import JavaMenu from './components/JavaMenu';
+import CPage from './components/Admin/Cprogram';
+
+
 
 
 const App = () => {
@@ -30,8 +36,11 @@ const App = () => {
         <Route path="/userprofile" element={<UserProfile/>} />
         <Route path="/manage-users" element={<ManageUsers/>} />
         <Route path="/manage-books" element={<ManageBooks/>} />
-        <Route path="/manage-programs" element={<ManageCode/>} />
-
+        <Route path="/manage-programs" element={<ManageCode/>} /> 
+        <Route path="/c" element={<CMenu/>} /> 
+        <Route path="/python" element={<PythonMenu/>} /> 
+        <Route path="/java" element={<JavaMenu/>} /> 
+        <Route path="/cpage" element={<CPage/>} /> 
     
 
       </Routes>
