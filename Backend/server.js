@@ -44,6 +44,17 @@ const cProgramSchema = new mongoose.Schema({
 });
 const CProgram = mongoose.model('CProgram', cProgramSchema);
 
+//Define MongoDB schema for python programs
+
+const PythonProgramSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  code: { type: String, required: true },
+  algorithm: { type: String, required: true }, // New field for algorithm
+});
+const PythonProgram = mongoose.model('PythonProgram', PythonProgramSchema);
+
+
 // Endpoint to handle email and password login
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -203,6 +214,128 @@ app.delete('/c-programs/:id', async (req, res) => {
     res.status(200).json({ message: 'C program deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error deleting C program', error });
+  }
+});
+
+app.get('/c-programs', async (req, res) => {
+  try {
+      const searchTerm = req.query.search || ''; // Get the search term from query parameters
+      const programs = await Program.find({
+          title: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
+      });
+      res.json(programs);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
+});
+
+// Get a specific program by ID
+app.get('/c-programs/:id', async (req, res) => {
+  try {
+      const program = await Program.findById(req.params.id);
+      if (!program) return res.status(404).json({ message: 'Program not found' });
+      res.json(program);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
+});
+
+
+
+app.get('/python-programs', async (req, res) => {
+  try {
+    const programs = await PythonProgram.find();
+    res.status(200).json(programs);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Python programs', error });
+  }
+});
+
+// Endpoint to get a specific Python program by ID
+app.get('/python-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await PythonProgram.findById(id);
+    if (!program) {
+      return res.status(404).json({ message: 'Python program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Python program', error });
+  }
+});
+
+// Endpoint to add a new Python program
+app.post('/python-programs', async (req, res) => {
+  const { title, description, code, algorithm } = req.body;
+
+  if (!title || !description || !code || !algorithm) {
+    return res.status(400).json({ message: 'Title, description, code, and algorithm required' });
+  }
+
+  try {
+    const newProgram = new PythonProgram({ title, description, code, algorithm });
+    await newProgram.save();
+    res.status(201).json(newProgram);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating Python program', error });
+  }
+});
+
+// Endpoint to update a Python program
+app.put('/python-programs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, description, code, algorithm } = req.body;
+
+  try {
+    const program = await PythonProgram.findByIdAndUpdate(id, { title, description, code, algorithm }, { new: true });
+    if (!program) {
+      return res.status(404).json({ message: 'Python program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating Python program', error });
+  }
+});
+
+// Endpoint to delete a Python program
+app.delete('/python-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await PythonProgram.findByIdAndDelete(id);
+    if (!program) {
+      return res.status(404).json({ message: 'Python program not found' });
+    }
+    res.status(200).json({ message: 'Python program deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting Python program', error });
+  }
+});
+
+
+// Search endpoint for Python programs
+app.get('/python-programs', async (req, res) => {
+  try {
+    const searchTerm = req.query.search || ''; // Get the search term from query parameters
+    const programs = await Program.find({
+      title: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
+    });
+    res.json(programs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Get a specific Python program by ID
+app.get('/python-programs/:id', async (req, res) => {
+  try {
+    const program = await Program.findById(req.params.id);
+    if (!program) return res.status(404).json({ message: 'Program not found' });
+    res.json(program);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
