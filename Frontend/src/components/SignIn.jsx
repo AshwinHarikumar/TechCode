@@ -46,7 +46,7 @@ function SignIn() {
       if (isAdmin) {
         navigate('/admin');
       } else {
-        navigate('/');
+        navigate('/homeuser');
       }
     } catch (error) {
       console.error('Google Sign-In error:', error);

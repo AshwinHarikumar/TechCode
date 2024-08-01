@@ -17,6 +17,14 @@ import PythonMenu from './components/PythonMenu';
 import JavaMenu from './components/JavaMenu';
 import CPage from './components/Admin/Cprogram';
 import PythonPage from './components/Admin/PythonPrgm';
+import NavbarUser from './components/User/NavBarUser';
+import ProgramsUser from './components/User/ProgramsUser';
+import NotesUser from './components/User/NotesUser';
+import BooksUser from './components/User/BooksUser';
+import HomePageUser from './components/User/Home-User';
+import Navbar3 from './components/Admin/NavBar3';
+import Navbar2 from './components/Admin/NavBar2';
+import NavbarAdmin from './components/Admin/NavBarAdmin';
 
 
 
@@ -33,7 +41,7 @@ const App = () => {
         <Route path="/programs" element={<><NavBar /><Programs/></>} />
         <Route path="/notes" element={<><NavBar /><Notes/></>} />
         <Route path="/books" element={<><NavBar /><Books/></>} />
-        <Route path="/admin" element={<><NavBar /><Admin/></>} />
+        <Route path="/admin" element={<><NavbarAdmin/><Admin/></>} />
         <Route path="/userprofile" element={<UserProfile/>} />
         <Route path="/manage-users" element={<ManageUsers/>} />
         <Route path="/manage-books" element={<ManageBooks/>} />
@@ -43,6 +51,10 @@ const App = () => {
         <Route path="/java" element={<JavaMenu/>} /> 
         <Route path="/cpage" element={<CPage/>} /> 
         <Route path="/pypage" element={<PythonPage/>} /> 
+        <Route path="/homeuser" element={<HomePageUser/>} /> 
+        <Route path="/programsuser" element={<><NavbarUser /><ProgramsUser/></>} />
+        <Route path="/notesuser" element={<><NavbarUser /><NotesUser/></>} />
+        <Route path="/booksuser" element={<><NavbarUser /><BooksUser/></>} />
         
     
 
