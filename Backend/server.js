@@ -54,6 +54,17 @@ const PythonProgramSchema = new mongoose.Schema({
 });
 const PythonProgram = mongoose.model('PythonProgram', PythonProgramSchema);
 
+////Define MongoDB schema for java programs
+
+const javaProgramSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  code: String,
+  algorithm: String
+});
+const JavaProgram = mongoose.model('JavaProgram', javaProgramSchema);
+
+
 
 // Endpoint to handle email and password login
 app.post('/login', async (req, res) => {
@@ -338,6 +349,94 @@ app.get('/python-programs/:id', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
+// Get all Java programs
+app.get('/java-programs', async (req, res) => {
+  try {
+    const programs = await JavaProgram.find();
+    res.status(200).json(programs);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Java programs', error });
+  }
+});
+
+// Get a specific Java program by ID
+app.get('/java-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await JavaProgram.findById(id);
+    if (!program) {
+      return res.status(404).json({ message: 'Java program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Java program', error });
+  }
+});
+
+// Add a new Java program
+app.post('/java-programs', async (req, res) => {
+  const { title, description, code, algorithm } = req.body;
+
+  if (!title || !description || !code || !algorithm) {
+    return res.status(400).json({ message: 'Title, description, code, and algorithm required' });
+  }
+
+  try {
+    const newProgram = new JavaProgram({ title, description, code, algorithm });
+    await newProgram.save();
+    res.status(201).json(newProgram);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating Java program', error });
+  }
+});
+
+// Update a Java program
+app.put('/java-programs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, description, code, algorithm } = req.body;
+
+  try {
+    const program = await JavaProgram.findByIdAndUpdate(id, { title, description, code, algorithm }, { new: true });
+    if (!program) {
+      return res.status(404).json({ message: 'Java program not found' });
+    }
+    res.status(200).json(program);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating Java program', error });
+  }
+});
+
+// Delete a Java program
+app.delete('/java-programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const program = await JavaProgram.findByIdAndDelete(id);
+    if (!program) {
+      return res.status(404).json({ message: 'Java program not found' });
+    }
+    res.status(200).json({ message: 'Java program deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting Java program', error });
+  }
+});
+
+// Search Java programs
+app.get('/java-programs', async (req, res) => {
+  try {
+    const searchTerm = req.query.search || ''; // Get the search term from query parameters
+    const programs = await JavaProgram.find({
+      title: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
+    });
+    res.json(programs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 // Admin-specific routes for user management
 app.get('/admin/users', async (req, res) => {
