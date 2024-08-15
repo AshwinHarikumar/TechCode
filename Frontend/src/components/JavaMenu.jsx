@@ -93,14 +93,14 @@ const JavaMenu = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ display: 'flex', padding: 4, gap: 2, }}>
-                {/* Move this Box to the left extreme */}
-                <Box sx={{ flex: 2, display: 'flex', flexDirection: 'column', }}>
+            <Box sx={{ padding: 4, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
+                {/* Left column for list of programs */}
+                <Box sx={{ flex: 1, maxWidth: { xs: '100%', sm: '500px' } }}>
                     <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2 }}>
                         Java Programs
                     </Typography>
-                    <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', maxWidth: 370 }}>
-                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', }}>
+                    <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+                        <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
                             {filteredPrograms.map((program) => (
                                 <ListItem key={program._id} disablePadding>
                                     <ListItemButton
@@ -131,8 +131,8 @@ const JavaMenu = () => {
                     </Paper>
                 </Box>
 
-                {/* Keep this Box on the right */}
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                {/* Right column for search input */}
+                <Box sx={{ flex: 1, maxWidth: { xs: '100%', sm: '350px' }, alignItems: 'flex-start' }}>
                     <TextField
                         variant="outlined"
                         label="Search Programs"
@@ -152,7 +152,6 @@ const JavaMenu = () => {
                         }}
                         sx={{
                             width: '100%',
-                            maxWidth: '350px',
                             mb: 2,
                             '& .MuiInputBase-root': {
                                 borderRadius: 2,
@@ -186,10 +185,7 @@ const JavaMenu = () => {
                             borderRadius: 3,
                             padding: 2,
                             boxShadow: 24,
-                            position: 'fixed',
-                            top: 0,
-                            right: 0,
-                            margin: 8,
+                            position: 'relative',
                             width: '400px', // Adjust width as needed
                             maxWidth: '90vw', // Adjust max width as needed
                         },

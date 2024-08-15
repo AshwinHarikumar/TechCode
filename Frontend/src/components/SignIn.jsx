@@ -76,7 +76,6 @@ function SignIn() {
       } else {
         navigate('/'); // Redirect to user page
       }
-      // alert(`You are logged in with email: ${email}`);
       setState({
         email: '',
         password: '',
@@ -174,6 +173,8 @@ function SignIn() {
           display: flex;
           flex-direction: row;
           gap: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
         button {
@@ -211,16 +212,65 @@ function SignIn() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          width: 100%;
         }
 
         .reset-password-form input {
           margin-bottom: 10px;
+          width: 100%;
         }
 
         .error {
           color: red;
           font-size: 14px;
           margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+          .form-container {
+            padding: 10px;
+          }
+
+          button {
+            font-size: 14px;
+            padding: 8px 16px;
+          }
+
+          .google-icon {
+            width: 28px;
+            height: 28px;
+          }
+
+          .reset-password-form input,
+          .form-container input {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .form-container {
+            padding: 5px;
+          }
+
+          button {
+            font-size: 12px;
+            padding: 6px 12px;
+          }
+
+          .google-icon {
+            width: 24px;
+            height: 24px;
+          }
+
+          .reset-password-form input,
+          .form-container input {
+            font-size: 12px;
+            padding: 8px;
+          }
+
+          .error {
+            font-size: 12px;
+          }
         }
       `}</style>
     </div>

@@ -27,42 +27,38 @@ import Navbar2 from './components/Admin/NavBar2';
 import NavbarAdmin from './components/Admin/NavBarAdmin';
 import JavaPage from './components/Admin/JavaPrgm';
 import TechNews from './components/TechNews';
-
-
-
+import { Container } from '@mui/material';
 
 const App = () => {
   return (
     <Router>
-     
-      <Routes>
-        <Route path="/" element={<><NavBar /><HomePage /></>} />
-        <Route path="/signin" element={<SigninForm />} />
-        <Route path="/signup" element={<SigninForm />} />
-        <Route path="/about" element={<><NavBar /><About /></>} />
-        <Route path="/programs" element={<><NavBar /><Programs/></>} />
-        <Route path="/technews" element={<><NavBar /><TechNews/></>} />
-        <Route path="/books" element={<><NavBar /><Books/></>} />
-        <Route path="/admin" element={<><NavbarAdmin/><Admin/></>} />
-        <Route path="/userprofile" element={<UserProfile/>} />
-        <Route path="/manage-users" element={<ManageUsers/>} />
-        <Route path="/manage-books" element={<ManageBooks/>} />
-        <Route path="/manage-programs" element={<ManageCode/>} /> 
-        <Route path="/c" element={<CMenu/>} /> 
-        <Route path="/python" element={<PythonMenu/>} /> 
-        <Route path="/java" element={<JavaMenu/>} /> 
-        <Route path="/cpage" element={<CPage/>} /> 
-        <Route path="/pypage" element={<PythonPage/>} /> 
-        <Route path="/javapage" element={<JavaPage/>} /> 
-        
-        <Route path="/homeuser" element={<HomePageUser/>} /> 
-        <Route path="/programsuser" element={<><NavbarUser /><ProgramsUser/></>} />
-        <Route path="/notesuser" element={<><NavbarUser /><NotesUser/></>} />
-        <Route path="/booksuser" element={<><NavbarUser /><BooksUser/></>} />
-        
-    
-
-      </Routes>
+      <NavBar />
+      <Container sx={{ marginTop: '80px' }}> 
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signin" element={<SigninForm />} />
+          <Route path="/signup" element={<SigninForm />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/programs" element={<Programs />} />
+          <Route path="/technews" element={<TechNews />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/admin" element={<><NavbarAdmin /><Admin /></>} />
+          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/manage-users" element={<ManageUsers />} />
+          <Route path="/manage-books" element={<ManageBooks />} />
+          <Route path="/manage-programs" element={<ManageCode />} />
+          <Route path="/c" element={<CMenu />} />
+          <Route path="/python" element={<PythonMenu />} />
+          <Route path="/java" element={<JavaMenu />} />
+          <Route path="/cpage" element={<CPage />} />
+          <Route path="/pypage" element={<PythonPage />} />
+          <Route path="/javapage" element={<JavaPage />} />
+          <Route path="/homeuser" element={<HomePageUser />} />
+          <Route path="/programsuser" element={<><NavbarUser /><ProgramsUser /></>} />
+          <Route path="/notesuser" element={<><NavbarUser /><NotesUser /></>} />
+          <Route path="/booksuser" element={<><NavbarUser /><BooksUser /></>} />
+        </Routes>
+      </Container>
     </Router>
   );
 };

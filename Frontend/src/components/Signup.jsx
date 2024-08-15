@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [state, setState] = React.useState({
@@ -10,7 +10,7 @@ function SignUp() {
   });
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -27,11 +27,9 @@ function SignUp() {
     setError('');
 
     try {
-      // Send sign-up data to the backend
       const response = await axios.post('http://localhost:3000/signup', { name, email, password });
       console.log('Sign-Up successful:', response.data);
       alert(`Account created for email: ${email}`);
-      // Redirect to login page on successful sign-up
       navigate('/signin');
       setState({
         name: '',
@@ -51,7 +49,6 @@ function SignUp() {
       <form onSubmit={handleOnSubmit}>
         <h1>Create Account</h1>
         <span>or use your email for registration</span>
-        <br />
         <input
           type="text"
           name="name"
@@ -73,7 +70,6 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Password"
         />
-        <br/>
         <div className="button-container">
           <button type="submit" disabled={loading}>
             {loading ? 'Signing Up...' : 'Sign Up'}
@@ -87,12 +83,34 @@ function SignUp() {
           flex-direction: column;
           align-items: center;
           padding: 20px;
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 400px;
+          margin: auto;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
+
+        input {
+          width: 100%;
+          padding: 10px;
+          margin: 5px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
         }
 
         .button-container {
           display: flex;
-          flex-direction: row;
-          gap: 10px;
+          justify-content: center;
+          margin-top: 10px;
         }
 
         button {
@@ -102,12 +120,58 @@ function SignUp() {
           padding: 10px 20px;
           border-radius: 5px;
           transition: background-color 0.3s, color 0.3s;
+          background-color: #4ecdc4;
+          color: #fff;
+        }
+
+        button:hover {
+          background-color: #36b7a7;
         }
 
         .error {
           color: red;
           font-size: 14px;
           margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+          .form-container {
+            padding: 15px;
+            max-width: 90%;
+          }
+
+          input {
+            padding: 8px;
+          }
+
+          button {
+            padding: 8px 16px;
+            font-size: 14px;
+          }
+
+          h1 {
+            font-size: 24px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .form-container {
+            padding: 10px;
+            max-width: 95%;
+          }
+
+          input {
+            padding: 6px;
+          }
+
+          button {
+            padding: 6px 12px;
+            font-size: 12px;
+          }
+
+          h1 {
+            font-size: 20px;
+          }
         }
       `}</style>
     </div>

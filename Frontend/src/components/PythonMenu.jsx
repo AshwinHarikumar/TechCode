@@ -93,14 +93,14 @@ const PythonMenu = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ display: 'flex', padding: 4, gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: 4, gap: 2 }}>
                 {/* Left section with programs list */}
-                <Box sx={{ flex: 2, display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ flex: { xs: 'auto', md: 2 }, display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2 }}>
                         Python Programs
                     </Typography>
-                    <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', maxWidth: 370 }}>
-                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+                        <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
                             {filteredPrograms.map((program) => (
                                 <ListItem key={program._id} disablePadding>
                                     <ListItemButton 
@@ -132,7 +132,7 @@ const PythonMenu = () => {
                 </Box>
 
                 {/* Right section with search bar */}
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <Box sx={{ flex: { xs: 'auto', md: 1 }, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                     <TextField
                         variant="outlined"
                         label="Search Programs"
@@ -190,8 +190,7 @@ const PythonMenu = () => {
                             top: 0,
                             right: 0,
                             margin: 8,
-                            width: '400px', // Adjust width as needed
-                            maxWidth: '90vw', // Adjust max width as needed
+                            width: { xs: '90%', md: '400px' }, // Adjust width responsively
                         },
                         '& .MuiDialogTitle-root': {
                             backgroundColor: '#1976d2',

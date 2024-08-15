@@ -10,7 +10,7 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
     fontFamily: "'Roboto', sans-serif",
-    marginTop: '6600px',
+    marginTop: '20px',
   },
   heading: {
     textAlign: 'center',
@@ -57,6 +57,32 @@ const styles = {
     height: 'auto',
     borderRadius: '8px',
     marginBottom: '10px',
+  },
+  // Responsive styles
+  '@media (max-width: 768px)': {
+    container: {
+      padding: '10px',
+    },
+    heading: {
+      fontSize: '2rem',
+    },
+    title: {
+      fontSize: '1.5rem',
+    },
+    description: {
+      fontSize: '1rem',
+    },
+  },
+  '@media (max-width: 480px)': {
+    heading: {
+      fontSize: '1.5rem',
+    },
+    title: {
+      fontSize: '1.25rem',
+    },
+    description: {
+      fontSize: '0.9rem',
+    },
   },
 };
 

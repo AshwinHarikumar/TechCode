@@ -6,15 +6,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Adjust layout on smaller screens */
+    flex-direction: column;
 }
 
-/* Container styles */
 /* Container styles */
 .styledcontainer {
     background-color: rgba(255, 255, 255, 0.3); /* Slightly darker semi-transparent black for contrast */
     padding: 2rem;
     border-radius: 10px; /* Slightly rounded corners for a modern look */
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.4); /* Enhanced shadow for depth */
+    width: 100%;
+    max-width: 90%; /* Responsive max-width */
 }
 
 /* Paper component styles */
@@ -38,10 +41,36 @@
     text-align: center;
 }
 
+/* Adjust title size on smaller screens */
+@media (max-width: 768px) {
+    .styledTitle {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .styledTitle {
+        font-size: 1.5rem;
+    }
+}
+
 .styledDescription {
     color: #000000; /* Black for the description */
     margin-bottom: 2rem; /* Space below the description */
     font-size: 1.2rem; /* Slightly larger font size for readability */
+}
+
+/* Adjust description size on smaller screens */
+@media (max-width: 768px) {
+    .styledDescription {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .styledDescription {
+        font-size: 0.9rem;
+    }
 }
 
 /* Grid item styles */
@@ -50,11 +79,20 @@
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
     background-color: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background for contrast */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    margin: 1rem; /* Add margin for spacing between items */
 }
 
-.gridItem:hover {
-    transform: translateY(-8px); /* More pronounced lift effect */
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+/* Adjust grid item styles on smaller screens */
+@media (max-width: 768px) {
+    .gridItem {
+        margin: 0.5rem; /* Reduce margin */
+    }
+}
+
+@media (max-width: 480px) {
+    .gridItem {
+        margin: 0.25rem; /* Further reduce margin */
+    }
 }
 
 /* Section title and description styles */
@@ -65,7 +103,33 @@
     font-size: 1.5rem; /* Slightly larger font size for titles */
 }
 
+/* Adjust section title size on smaller screens */
+@media (max-width: 768px) {
+    .styledSectionTitle {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .styledSectionTitle {
+        font-size: 1rem;
+    }
+}
+
 .styledSectionDescription {
     color: #000000; /* Black for section descriptions */
     font-size: 1.1rem; /* Slightly larger font size for descriptions */
+}
+
+/* Adjust section description size on smaller screens */
+@media (max-width: 768px) {
+    .styledSectionDescription {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .styledSectionDescription {
+        font-size: 0.9rem;
+    }
 }

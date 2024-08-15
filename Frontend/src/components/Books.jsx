@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Card, CardContent, CardActions, CardMedia, Button } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardMedia, Button, Grid, CardActions, Container } from '@mui/material';
 import axios from 'axios';
 
 const Books = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(false);
-
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -28,49 +27,52 @@ const Books = () => {
   };
 
   return (
-    <div>
-      <Box
-        sx={{
-          padding: 2,
-          marginTop: '200px', 
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 3, 
-          justifyContent: 'flex-start'
-        }}
-      >
-        {loading ? (
-          <Typography variant="h6">Loading...</Typography>
-        ) : (
-          documents.map((document) => (
-            <Card 
-              key={document._id}
-              sx={{ 
-                backgroundColor: 'white', 
-                position: 'relative', 
-                maxWidth: 240, 
-                margin: 2, 
-                borderRadius: 2, 
-                boxShadow: 3, 
-                transition: 'transform 0.2s ease-in-out', 
-                '&:hover': {
-                  transform: 'scale(1.05)', 
-                } 
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="140"
-                image={document.image || 'https://via.placeholder.com/300'}
-                alt="Document"
-                sx={{ width: '100%', height: '45vh', cursor: 'pointer' }} 
-                onClick={() => handleImageClick(document.googleDriveLink)}
-              />
-            </Card>
-          ))
-        )}
-      </Box>
-    </div>
+    <Container sx={{ marginTop: '500px' }}> 
+      {loading ? (
+        <Typography variant="h6" sx={{ textAlign: 'center' }}>Loading...</Typography>
+      ) : (
+        <Grid container spacing={3}>
+          {documents.map((document) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={document._id}>
+              <Card 
+                sx={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: 2, 
+                  boxShadow: 3, 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  height: '100%',
+                  transition: 'transform 0.2s ease-in-out', 
+                  '&:hover': {
+                    transform: 'scale(1.05)', 
+                  } 
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200" 
+                  image={document.image || 'https://via.placeholder.com/300'}
+                  alt="Document"
+                  sx={{ cursor: 'pointer', objectFit: 'cover' }} 
+                  onClick={() => handleImageClick(document.googleDriveLink)}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h6" component="div">
+                    {document.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {document.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" onClick={() => handleImageClick(document.googleDriveLink)}>View</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Container>
   );
 };
 
