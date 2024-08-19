@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const location = useLocation(); 
+  const location = useLocation();
   
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -60,9 +60,52 @@ const Navbar = () => {
                   {item.text}
                 </Button>
               ))}
-              <Button color="inherit" component={Link} to="/signin">Login</Button>
-              <Button color="inherit" component={Link} to="/signup">Signup</Button>
+              <Button 
+                color="primary" 
+                component={Link} 
+                to="/signin" 
+                sx={{ 
+                  backgroundColor: 'white', 
+                  color: 'black', 
+                  '&:hover': { 
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)' 
+                  }
+                }}
+              >
+                Login
+              </Button>
+              {/* <Button 
+                color="primary" 
+                component={Link} 
+                to="/signup" 
+                sx={{ 
+                  backgroundColor: 'white', 
+                  color: 'black', 
+                  '&:hover': { 
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)' 
+                  }
+                }}
+              >
+                Signup
+              </Button> */}
             </div>
+          )}
+          {isMobile && (
+            <Button 
+              color="primary" 
+              component={Link} 
+              to="/signin" 
+              sx={{ 
+                marginLeft: 'auto', 
+                backgroundColor: 'white', 
+                color: 'black', 
+                '&:hover': { 
+                  backgroundColor: 'rgba(0, 0, 0, 0.1)' 
+                }
+              }}
+            >
+              Login
+            </Button>
           )}
         </Toolbar>
       </AppBar>
@@ -91,11 +134,27 @@ const Navbar = () => {
               onClick={() => handleNavigation(item.path)}
               sx={{
                 backgroundColor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                color: "white"
               }}
             >
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
+          {/* <ListItem 
+            button 
+            component={Link} 
+            to="/signin" 
+            onClick={handleDrawerClose} 
+            sx={{ 
+              color: "black", 
+              backgroundColor: 'white', 
+              '&:hover': { 
+                backgroundColor: 'rgba(0, 0, 0, 0.1)' 
+              } 
+            }}
+          >
+            <ListItemText primary="Login" />
+          </ListItem> */}
         </List>
       </Drawer>
     </div>

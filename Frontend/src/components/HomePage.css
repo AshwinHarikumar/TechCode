@@ -1,135 +1,170 @@
-/* General root styles */
-.root {
-    /* background: linear-gradient(135deg, #0f4c75, #00a8cc); Gradient blue background */
-    min-height: 100vh;
-    padding: 2rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Adjust layout on smaller screens */
-    flex-direction: column;
-}
-
-/* Container styles */
-.styledcontainer {
-    background-color: rgba(255, 255, 255, 0.3); /* Slightly darker semi-transparent black for contrast */
-    padding: 2rem;
-    border-radius: 10px; /* Slightly rounded corners for a modern look */
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.4); /* Enhanced shadow for depth */
-    width: 100%;
-    max-width: 90%; /* Responsive max-width */
-}
-
-/* Paper component styles */
-.styledPaper {
-    padding: 2rem;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.85); /* Very dark semi-transparent black for high contrast */
-    color: #000000; /* Black text color for high readability */
-    box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.5); /* Stronger shadow for more depth */
-    border-radius: 15px; /* Consistent rounded corners */
-    width: 100%;
-    max-width: 900px; /* Slightly wider maximum width for larger screens */
-}
-
-/* Typography styles */
-.styledTitle {
-    color: #000000; /* Black for the title */
-    font-weight: 700; /* Bold for emphasis */
-    margin-bottom: 1rem; /* Space below the title */
-    font-size: 2.5rem; /* Larger font size for impact */
-    text-align: center;
-}
-
-/* Adjust title size on smaller screens */
-@media (max-width: 768px) {
-    .styledTitle {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .styledTitle {
-        font-size: 1.5rem;
-    }
-}
-
-.styledDescription {
-    color: #000000; /* Black for the description */
-    margin-bottom: 2rem; /* Space below the description */
-    font-size: 1.2rem; /* Slightly larger font size for readability */
-}
-
-/* Adjust description size on smaller screens */
-@media (max-width: 768px) {
-    .styledDescription {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .styledDescription {
-        font-size: 0.9rem;
-    }
-}
-
-/* Grid item styles */
+/* Ensure all cards have the same height */
 .gridItem {
-    border-radius: 15px; /* Rounded corners for a modern look */
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
-    background-color: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background for contrast */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
-    margin: 1rem; /* Add margin for spacing between items */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Adjust grid item styles on smaller screens */
-@media (max-width: 768px) {
-    .gridItem {
-        margin: 0.5rem; /* Reduce margin */
-    }
+/* Add transparency for mobile screens */
+@media (max-width: 600px) {
+  .gridItem {
+    background-color: transparent !important; /* Ensure the card itself is transparent */
+    box-shadow: none !important; /* Optional: Remove shadow for mobile if desired */
+  }
+
+  /* Transparent background for card content */
+  .gridItem .MuiCardContent-root {
+    background-color: transparent !important; /* Ensure the card content is fully transparent */
+    box-shadow: none !important; /* Remove any shadow from card content */
+    color: #020202;
+    /* Ensure text color is readable on transparent background */
+  }
+
+  /* Adjust the title for mobile screens */
+  .styledTitle {
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker transparent black background */
+    color: white; /* White text color */
+    padding: 1rem; /* Increase padding for better visibility and height */
+    border-radius: 1px; /* Rounded corners for better aesthetics */
+    max-width: 100%; /* Ensure it doesn’t overflow */
+    position: fixed; /* Fix the title position */
+    top: 55px; /* Align it at the top */
+    left: 0;
+    right: 0;
+    margin-bottom: 3rem; /* Space between the title and the cards */
+    font-weight: 300; /* Minimal font weight */
+    text-align: center; /* Center the text horizontally */
+    z-index: 1000; /* Ensure it's above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+  }
+
+  /* Adjust margin-top for the container to account for the fixed title */
+  .container {
+    margin-top: 4rem; /* Adjust margin-top to ensure space for the fixed title */
+  }
+
+  /* Hide descriptions on mobile screens */
+  .styledSectionDescription,
+  .styledDescription {
+    display: none;
+  }
 }
 
-@media (max-width: 480px) {
-    .gridItem {
-        margin: 0.25rem; /* Further reduce margin */
-    }
+/* Remove shadow and adjust transform on hover */
+.gridItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Section title and description styles */
-.styledSectionTitle {
-    color: #000000; /* Black for section titles */
-    font-weight: 600; /* Semi-bold for emphasis */
-    margin-bottom: 0.5rem; /* Space below the section title */
-    font-size: 1.5rem; /* Slightly larger font size for titles */
+/* Ensure the AppBar styles are retained */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background for better contrast */
+  box-shadow: none;
+  padding: 0 1rem; /* Add padding to make room for the logo */
 }
 
-/* Adjust section title size on smaller screens */
-@media (max-width: 768px) {
-    .styledSectionTitle {
-        font-size: 1.25rem;
-    }
+/* Toolbar styles */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-@media (max-width: 480px) {
-    .styledSectionTitle {
-        font-size: 1rem;
-    }
+/* Menu button styles */
+.menuButton {
+  margin-right: 1rem;
 }
 
-.styledSectionDescription {
-    color: #000000; /* Black for section descriptions */
-    font-size: 1.1rem; /* Slightly larger font size for descriptions */
+/* Logo styles */
+.logo {
+  height: 40px; /* Adjust size as needed */
+  margin-right: 1rem;
 }
 
-/* Adjust section description size on smaller screens */
-@media (max-width: 768px) {
-    .styledSectionDescription {
-        font-size: 1rem;
-    }
+/* Title styles */
+.title {
+  flex-grow: 1;
+  margin-left: 1rem;
+  color: white; /* White text color for better visibility */
 }
 
-@media (max-width: 480px) {
-    .styledSectionDescription {
-        font-size: 0.9rem;
-    }
+/* Menu items container styles */
+.menuItems {
+  display: flex;
+  align-items: center;
+}
+
+/* Navigation button styles */
+.navButton {
+  margin-left: 1rem;
+  color: white; /* White text color for nav buttons */
+}
+
+/* Drawer styles */
+.drawer {
+  width: 240px; /* Width of the drawer */
+}
+
+.drawerItem {
+  color: white; /* Set text color for the items */
+}
+
+.drawerItem:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Slight hover effect */
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  /* Adjust the toolbar and menu items for smaller screens */
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .logo {
+    height: 30px; /* Smaller logo for smaller screens */
+  }
+
+  .title {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+    color: white; /* Ensure the title color is consistent */
+  }
+
+  .menuItems {
+    display: none; /* Hide menu items on small screens */
+  }
+
+  .drawer {
+    width: 200px; /* Adjust width for mobile screens */
+  }
+}
+
+/* Styles for very small screens */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 0.5rem; /* Adjust padding for very small screens */
+  }
+  
+  .menuButton {
+    margin-right: 0.5rem; /* Smaller margin for mobile screens */
+  }
+
+  .logo {
+    height: 25px; /* Smaller logo for very small screens */
+  }
+
+  .navButton {
+    margin-left: 0.5rem; /* Smaller margin for mobile screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .gridItem .MuiCardContent-root .MuiTypography-h5 {
+    font-weight: 500 !important; /* Force apply the font weight */
+    font-family: Arial, Helvetica, sans-serif !important; 
+  }
 }

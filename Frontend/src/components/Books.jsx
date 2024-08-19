@@ -27,7 +27,10 @@ const Books = () => {
   };
 
   return (
-    <Container sx={{ marginTop: '500px' }}> 
+    <Container sx={{
+      paddingTop: { xs: '2700px', sm: '0px' }, // Increase padding top for mobile screens
+      marginTop: { xs: '0', sm: '600px' } // Adjust top margin for mobile screens if needed
+    }}> 
       {loading ? (
         <Typography variant="h6" sx={{ textAlign: 'center' }}>Loading...</Typography>
       ) : (
@@ -38,6 +41,7 @@ const Books = () => {
                 sx={{ 
                   backgroundColor: 'white', 
                   borderRadius: 2, 
+             
                   boxShadow: 3, 
                   display: 'flex', 
                   flexDirection: 'column',

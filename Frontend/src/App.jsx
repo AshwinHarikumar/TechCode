@@ -33,7 +33,8 @@ const App = () => {
   return (
     <Router>
       <NavBar />
-      <Container sx={{ marginTop: '80px' }}> 
+      <Container sx={{ marginTop: '80px' }}>
+         
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SigninForm />} />
