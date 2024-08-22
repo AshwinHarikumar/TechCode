@@ -1,7 +1,8 @@
+import './ManageBook.css'; 
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, TextField, Typography, Avatar } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Navbar2 from './NavBar2';
@@ -116,7 +117,7 @@ const ManageBooks = () => {
   };
 
   return (
-    <div>
+    <div className="manage-books-container">
       <Navbar2 onAddClick={handleClickOpenAdd} />
 
       {/* Add Document Dialog */}
@@ -233,51 +234,28 @@ const ManageBooks = () => {
         </DialogContent>
       </Dialog>
 
-      <Box
-        sx={{
-          padding: 2,
-          marginTop: '500px', // Adjust margin to place below the navbar
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 3, // Space between cards
-          justifyContent: 'flex-start'
-        }}
-      >
+      <List className="manage-books-list">
         {loading ? (
           <Typography variant="h6">Loading...</Typography>
         ) : (
           documents.map((document) => (
-            <Card 
+            <ListItem
               key={document._id}
-              sx={{ 
-                backgroundColor: 'white', 
-                position: 'relative', 
-                maxWidth: 240, 
-                margin: 2, 
-                borderRadius: 2, // Rounded corners
-                boxShadow: 3, // Add some shadow for better visibility
-                transition: 'transform 0.2s ease-in-out', // Add transition
-                '&:hover': {
-                  transform: 'scale(1.05)', // Add hover effect
-                } 
-              }}
+              className="manage-books-list-item"
             >
-              <CardMedia
-                component="img"
-                height="140"
-                image={document.image || 'https://via.placeholder.com/300'}
-                alt="Document"
-                sx={{ width: '100%', height: '45vh' }}
+              <ListItemAvatar>
+                <Avatar
+                  variant="square"
+                  src={document.image || 'https://via.placeholder.com/300'}
+                  alt={document.title}
+                  className="manage-books-list-item-avatar"
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={document.title}
+                secondary={document.description}
               />
-              <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
-                  {document.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {document.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
+              <div className="manage-books-list-item-buttons">
                 <Button
                   size="small"
                   color="primary"
@@ -303,11 +281,11 @@ const ManageBooks = () => {
                 >
                   Delete
                 </Button>
-              </CardActions>
-            </Card>
+              </div>
+            </ListItem>
           ))
         )}
-      </Box>
+      </List>
     </div>
   );
 };
