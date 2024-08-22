@@ -8,6 +8,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+
 /* Add transparency for mobile screens */
 @media (max-width: 600px) {
   .gridItem {
@@ -19,8 +20,7 @@
   .gridItem .MuiCardContent-root {
     background-color: transparent !important; /* Ensure the card content is fully transparent */
     box-shadow: none !important; /* Remove any shadow from card content */
-    color: #020202;
-    /* Ensure text color is readable on transparent background */
+    color: #020202; /* Ensure text color is readable on transparent background */
   }
 
   /* Adjust the title for mobile screens */
@@ -50,6 +50,35 @@
   .styledSectionDescription,
   .styledDescription {
     display: none;
+  }
+
+  /* Reduce card size for mobile screens */
+  .gridItem {
+    height: auto; /* Allow height to adjust based on content */
+    padding: 0.5rem; /* Add padding to ensure content does not touch edges */
+  }
+
+  /* Adjust font sizes within the card */
+  .gridItem .MuiTypography-h5 {
+    font-size: 1rem !important; /* Smaller title font size */
+  }
+
+  .gridItem .MuiTypography-body2 {
+    font-size: 0.75rem !important; /* Smaller description font size */
+  }
+
+  /* Adjust card image size */
+  .gridItem .MuiCardMedia-root {
+    height: 150px !important; /* Smaller image height */
+  }
+
+  /* Button styles for mobile screens */
+  .gridItem .MuiButton-root {
+    margin-top: 1rem;
+    border-radius: 8px;
+    text-transform: none; /* Preserve text capitalization */
+    background-color: black !important; /* Set button background color to black */
+    color: white !important; /* Set text color to white for contrast */
   }
 }
 
@@ -160,11 +189,16 @@
   .navButton {
     margin-left: 0.5rem; /* Smaller margin for mobile screens */
   }
-}
 
-@media (max-width: 600px) {
   .gridItem .MuiCardContent-root .MuiTypography-h5 {
     font-weight: 500 !important; /* Force apply the font weight */
     font-family: Arial, Helvetica, sans-serif !important; 
   }
 }
+/* Hide the title on mobile screens */
+@media (max-width: 600px) {
+  .styledTitle {
+    display: none;
+  }
+}
+

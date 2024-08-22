@@ -90,8 +90,8 @@ const CMenu = () => {
         <>
             <Navbar />
             <Box sx={{ padding: { xs: 1, sm: 2 }, width: '100%' }}>
-                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 2, color: '#1e88e5', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
-                    C Programs
+                <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 'bold', mb: 2,mt:-2, color: 'black', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                    C PROGRAMS
                 </Typography>
                 <TextField
                     variant="outlined"
@@ -131,7 +131,7 @@ const CMenu = () => {
                         },
                     }}
                 />
-                <Paper elevation={6} sx={{ padding: 2, borderRadius: 4, backgroundColor: '#fafafa' }}>
+                <Paper elevation={6} sx={{ padding: 2, borderRadius: 4, backgroundColor: 'black' }}>
                     <Box
                         sx={{
                             maxHeight: '500px',
