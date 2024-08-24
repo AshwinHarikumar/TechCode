@@ -17,8 +17,11 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import CloseIcon from '@mui/icons-material/Close';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import axios from 'axios';
 import Navbar from './NavBar';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const CMenu = () => {
     const [programs, setPrograms] = useState([]);
@@ -90,7 +93,7 @@ const CMenu = () => {
         <>
             <Navbar />
             <Box sx={{ padding: { xs: 1, sm: 2 }, width: '100%' }}>
-                <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 'bold', mb: 2,mt:-2, color: 'black', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 'bold', mb: 2, mt: -2, color: 'black', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
                     C PROGRAMS
                 </Typography>
                 <TextField
@@ -211,6 +214,7 @@ const CMenu = () => {
                             backgroundColor: '#1e88e5',
                             color: 'white',
                             padding: '16px 24px',
+                            position: 'relative',
                         },
                         '& .MuiDialogContent-root': {
                             padding: 2,
@@ -221,19 +225,66 @@ const CMenu = () => {
                         <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                             {selectedProgram.title}
                         </Typography>
+                        <IconButton
+                            onClick={handleDialogClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: 'white',
+                            }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
                     </DialogTitle>
                     <DialogContent dividers>
-                        <Typography variant="body1" gutterBottom sx={{ mb: 2, fontSize: { xs: '0.875rem', sm: '1rem' } }}>
-                            {selectedProgram.description}
-                        </Typography>
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                                Description
+                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                                    {selectedProgram.description}
+                                </Typography>
+                                <CopyToClipboard text={selectedProgram.description}>
+                                    <IconButton color="primary" sx={{ ml: 1 }}>
+                                        <FileCopyIcon />
+                                    </IconButton>
+                                </CopyToClipboard>
+                            </Box>
+                        </Box>
                         <Divider sx={{ mb: 2 }} />
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
-                            <strong>Code:</strong> {selectedProgram.code}
-                        </Typography>
-                        <Divider sx={{ mb: 2, mt: 2 }} />
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#e8f5e9', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
-                            <strong>Algorithm:</strong> {selectedProgram.algorithm}
-                        </Typography>
+                        <Box>
+                            <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                                Algorithm
+                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                                    {selectedProgram.algorithm}
+                                </Typography>
+                                <CopyToClipboard text={selectedProgram.algorithm}>
+                                    <IconButton color="primary" sx={{ ml: 1 }}>
+                                        <FileCopyIcon />
+                                    </IconButton>
+                                </CopyToClipboard>
+                            </Box>
+                        </Box>
+                        <Divider sx={{ my: 2 }} />
+                        <Box>
+                            <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                                Code
+                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                                    {selectedProgram.code}
+                                </Typography>
+                                <CopyToClipboard text={selectedProgram.code}>
+                                    <IconButton color="primary" sx={{ ml: 1 }}>
+                                        <FileCopyIcon />
+                                    </IconButton>
+                                </CopyToClipboard>
+                            </Box>
+                        </Box>
                     </DialogContent>
                 </Dialog>
             )}

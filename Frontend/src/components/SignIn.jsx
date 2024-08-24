@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { auth } from './firebaseConfig'; // Ensure firebaseConfig is correctly set up
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import { useNavigate } from 'react-router-dom';
+import './SigninForm.css';
 
 const googleAuthProvider = new GoogleAuthProvider();
 
-function SignIn() {
-  const [state, setState] = React.useState({
+const SignIn = () => {
+  const [state, setState] = useState({
+    name: '',
     email: '',
     password: '',
     resetEmail: ''
   });
-  const [isResetFormVisible, setResetFormVisible] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [isResetFormVisible, setResetFormVisible] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -28,21 +31,17 @@ function SignIn() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setError('');
-  
+
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const user = result.user;
       const idToken = await user.getIdToken();
-  
-      // Send the ID token to your backend server
+
       const response = await axios.post('http://localhost:3000/login/google', { token: idToken });
       const { token, isAdmin } = response.data;
-  
-      // Store the token in local storage
+
       localStorage.setItem('token', token);
-      console.log(token);
-  
-      // Route based on isAdmin flag
+
       if (isAdmin) {
         navigate('/admin');
       } else {
@@ -58,32 +57,26 @@ function SignIn() {
 
   const handleOnSubmit = async (evt) => {
     evt.preventDefault();
-    const { email, password } = state;
+    const { name, email, password } = state;
     setLoading(true);
     setError('');
 
     try {
-      // Send email and password to the backend for authentication
-      const response = await axios.post('http://localhost:3000/login', { email, password });
-      const { token, isAdmin } = response.data; // Get token and isAdmin from backend response
+      const url = isSignUp ? 'http://localhost:3000/signup' : 'http://localhost:3000/login';
+      const response = await axios.post(url, { name, email, password });
+      const { token, isAdmin } = response.data;
 
-      // Store the token in local storage
       localStorage.setItem('token', token);
 
-      // Route based on isAdmin flag
       if (isAdmin) {
-        navigate('/admin'); // Redirect to admin page
+        navigate('/admin');
       } else {
-        navigate('/'); // Redirect to user page
+        navigate('/homeuser');
       }
-      setState({
-        email: '',
-        password: '',
-        resetEmail: ''
-      });
+      setState({ name: '', email: '', password: '', resetEmail: '' });
     } catch (error) {
-      console.error('Sign-In error:', error);
-      setError('Error signing in. Please check your credentials.');
+      console.error(`${isSignUp ? 'Sign-Up' : 'Sign-In'} error:`, error);
+      setError(`Error ${isSignUp ? 'signing up' : 'signing in'}. Please try again.`);
     } finally {
       setLoading(false);
     }
@@ -107,9 +100,9 @@ function SignIn() {
   };
 
   return (
-    <div className="form-container sign-in-container">
+    <div className="form-container">
       {isResetFormVisible ? (
-        <div className="reset-password-form">
+        <div className="form reset-form">
           <h1>Reset Password</h1>
           <input
             type="email"
@@ -117,162 +110,75 @@ function SignIn() {
             name="resetEmail"
             value={state.resetEmail}
             onChange={handleChange}
+            className="input"
           />
-          <button onClick={handlePasswordReset} disabled={loading}>
+          <button onClick={handlePasswordReset} disabled={loading} className="button">
             {loading ? 'Sending...' : 'Send Reset Email'}
           </button>
-          <button onClick={() => setResetFormVisible(false)} disabled={loading}>
-            Back to Sign In
+          <button onClick={() => setResetFormVisible(false)} disabled={loading} className="button ghost">
+            Back to {isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
           {error && <p className="error">{error}</p>}
         </div>
       ) : (
-        <form onSubmit={handleOnSubmit}>
-          <h1>Sign in</h1>
-          <span>or use your account</span>
+        <form onSubmit={handleOnSubmit} className="form sign-in-form">
+          <h1>{isSignUp ? 'Create Account' : 'Sign In'}</h1>
+          <span>or use your email for registration</span>
+          {isSignUp && (
+            <input
+              type="text"
+              name="name"
+              value={state.name}
+              onChange={handleChange}
+              placeholder="Name"
+              className="input"
+            />
+          )}
           <input
             type="email"
-            placeholder="Email"
             name="email"
             value={state.email}
             onChange={handleChange}
+            placeholder="Email"
+            className="input"
           />
           <input
             type="password"
             name="password"
-            placeholder="Password"
             value={state.password}
             onChange={handleChange}
+            placeholder="Password"
+            className="input"
           />
-          <a href="#" onClick={() => setResetFormVisible(true)}>Forgot your password?</a>
-          <div className="button-container">
-            <button
-              type="button"
-              className="google-sign-in-button"
-              onClick={handleGoogleSignIn}
-              disabled={loading}
-            >
-              <span className="google-icon"></span>
-            </button>
-            <button type="submit" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
-            </button>
-          </div>
+          {isSignUp ? (
+            <div className="button-container">
+              <button type="submit" disabled={loading} className="button">
+                {loading ? 'Signing Up...' : 'Sign Up'}
+              </button>
+              <button type="button" onClick={() => setIsSignUp(false)} className="button ghost">
+                Already have an account? Sign In
+              </button>
+            </div>
+          ) : (
+            <div className="button-container">
+              <button type="button" onClick={handleGoogleSignIn} disabled={loading} className="button google-btn">
+                <span className="google-icon"></span>
+                Sign In with Google
+              </button>
+              <button type="submit" disabled={loading} className="button">
+                {loading ? 'Signing In...' : 'Sign In'}
+              </button>
+              <a href="#" onClick={() => setResetFormVisible(true)} className="link">
+                Forgot your password?
+              </a>
+              <button type="button" onClick={() => setIsSignUp(true)} className="button ghost">
+                Create an account
+              </button>
+            </div>
+          )}
           {error && <p className="error">{error}</p>}
         </form>
       )}
-      <style jsx>{`
-        .form-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 20px;
-        }
-
-        .button-container {
-          display: flex;
-          flex-direction: row;
-          gap: 10px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        button {
-          border: none;
-          cursor: pointer;
-          font-size: 16px;
-          padding: 10px 20px;
-          border-radius: 5px;
-          transition: background-color 0.3s, color 0.3s;
-        }
-
-        .google-sign-in-button {
-          background-color: transparent;
-          color: #333;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-        }
-
-        .google-sign-in-button:hover {
-          background-color: transparent;
-        }
-
-        .google-icon {
-          width: 34px;
-          height: 34px;
-          background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png');
-          background-size: cover;
-          background-repeat: no-repeat;
-        }
-
-        .reset-password-form {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-        }
-
-        .reset-password-form input {
-          margin-bottom: 10px;
-          width: 100%;
-        }
-
-        .error {
-          color: red;
-          font-size: 14px;
-          margin-top: 10px;
-        }
-
-        @media (max-width: 768px) {
-          .form-container {
-            padding: 10px;
-          }
-
-          button {
-            font-size: 14px;
-            padding: 8px 16px;
-          }
-
-          .google-icon {
-            width: 28px;
-            height: 28px;
-          }
-
-          .reset-password-form input,
-          .form-container input {
-            font-size: 14px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .form-container {
-            padding: 5px;
-          }
-
-          button {
-            font-size: 12px;
-            padding: 6px 12px;
-          }
-
-          .google-icon {
-            width: 24px;
-            height: 24px;
-          }
-
-          .reset-password-form input,
-          .form-container input {
-            font-size: 12px;
-            padding: 8px;
-          }
-
-          .error {
-            font-size: 12px;
-          }
-        }
-      `}</style>
     </div>
   );
 }

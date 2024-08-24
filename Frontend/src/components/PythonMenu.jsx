@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Typography,
     Box,
-    List,
-    ListItem,
-    ListItemButton,
     Dialog,
     DialogTitle,
     DialogContent,
@@ -15,13 +12,13 @@ import {
     IconButton,
     Divider,
     Paper,
-    ListItemIcon
+    Grid,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import axios from 'axios';
 import Navbar from './NavBar';
-import CodeIcon from '@mui/icons-material/Code'; // Example icon for list items
 
 const PythonMenu = () => {
     const [programs, setPrograms] = useState([]);
@@ -34,7 +31,7 @@ const PythonMenu = () => {
     useEffect(() => {
         const fetchPrograms = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/python-programs'); // Replace with your API endpoint
+                const response = await axios.get('http://localhost:3000/python-programs');
                 setPrograms(response.data);
                 setLoading(false);
             } catch (err) {
@@ -69,7 +66,6 @@ const PythonMenu = () => {
         setSearchTerm('');
     };
 
-    // Filter programs based on search term
     const filteredPrograms = programs.filter(program =>
         program.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -93,86 +89,110 @@ const PythonMenu = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: 4, gap: 2 }}>
-                {/* Left section with programs list */}
-                <Box sx={{ flex: { xs: 'auto', md: 2 }, display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2 }}>
-                        Python Programs
-                    </Typography>
-                    <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden' }}>
-                        <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <Box sx={{ padding: { xs: 1, sm: 2 }, width: '100%' }}>
+                <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 'bold', mb: 2,mt:-2, color: 'black', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                    PYTHON PROGRAMS
+                </Typography>
+                <TextField
+                    variant="outlined"
+                    label="Search Programs"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                {searchTerm && (
+                                    <IconButton onClick={handleClearSearch}>
+                                        <ClearIcon />
+                                    </IconButton>
+                                )}
+                                <SearchIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                    sx={{
+                        width: '100%',
+                        mb: 4,
+                        '& .MuiInputBase-root': {
+                            borderRadius: 4,
+                            backgroundColor: '#f1f1f1',
+                            padding: '0 12px',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#1e88e5',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#1976d2',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#1976d2',
+                            },
+                        },
+                    }}
+                />
+                <Paper elevation={6} sx={{ padding: 2, borderRadius: 4, backgroundColor: 'black' }}>
+                    <Box
+                        sx={{
+                            maxHeight: '500px',
+                            overflowY: 'auto',
+                            '&::-webkit-scrollbar': {
+                                width: 8,
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: '#888',
+                                borderRadius: 4,
+                            },
+                            '&::-webkit-scrollbar-thumb:hover': {
+                                backgroundColor: '#555',
+                            },
+                        }}
+                    >
+                        <Grid container spacing={2}>
                             {filteredPrograms.map((program) => (
-                                <ListItem key={program._id} disablePadding>
-                                    <ListItemButton 
-                                        onClick={() => handleListItemClick(program._id)} 
-                                        sx={{ 
-                                            padding: 2, 
-                                            borderRadius: 1,
-                                            mb: 1, // Add spacing between items
-                                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent background
-                                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                                            '&:hover': { 
-                                                backgroundColor: 'rgba(224, 224, 224, 0.9)', // Slightly darker on hover
-                                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                                                transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+                                <Grid item xs={12} sm={6} md={4} lg={3} key={program._id}>
+                                    <Box
+                                        onClick={() => handleListItemClick(program._id)}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            padding: 2,
+                                            cursor: 'pointer',
+                                            border: '1px solid #e0e0e0',
+                                            borderRadius: 4,
+                                            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                                            backgroundColor: '#ffffff',
+                                            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                            '&:hover': {
+                                                transform: 'translateY(-5px)',
+                                                boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
                                             },
                                         }}
                                     >
-                                        <ListItemIcon>
-                                            <CodeIcon />
-                                        </ListItemIcon>
-                                        <Typography variant="body1" sx={{ flex: 1 }}>
+                                        <InsertDriveFileIcon sx={{ fontSize: { xs: 30, sm: 40, md: 50 }, color: '#1e88e5' }} />
+                                        <Typography
+                                            variant="body1"
+                                            align="center"
+                                            sx={{
+                                                marginTop: 1,
+                                                color: '#333333',
+                                                fontWeight: 'bold',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                maxWidth: '100%',
+                                                fontSize: { xs: '0.8rem', sm: '1rem' },
+                                            }}
+                                        >
                                             {program.title}
                                         </Typography>
-                                    </ListItemButton>
-                                </ListItem>
+                                    </Box>
+                                </Grid>
                             ))}
-                        </List>
-                    </Paper>
-                </Box>
-
-                {/* Right section with search bar */}
-                <Box sx={{ flex: { xs: 'auto', md: 1 }, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <TextField
-                        variant="outlined"
-                        label="Search Programs"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    {searchTerm && (
-                                        <IconButton onClick={handleClearSearch}>
-                                            <ClearIcon />
-                                        </IconButton>
-                                    )}
-                                    <SearchIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                        sx={{
-                            width: '100%',
-                            maxWidth: '350px',
-                            mb: 2,
-                            '& .MuiInputBase-root': {
-                                borderRadius: 2,
-                                backgroundColor: '#fafafa',
-                                padding: '0 12px',
-                            },
-                            '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                    borderColor: '#1976d2',
-                                },
-                                '&:hover fieldset': {
-                                    borderColor: '#1565c0',
-                                },
-                                '&.Mui-focused fieldset': {
-                                    borderColor: '#1565c0',
-                                },
-                            },
-                        }}
-                    />
-                </Box>
+                        </Grid>
+                    </Box>
+                </Paper>
             </Box>
 
             {selectedProgram && (
@@ -183,39 +203,35 @@ const PythonMenu = () => {
                     fullWidth
                     sx={{
                         '& .MuiPaper-root': {
-                            borderRadius: 3,
+                            borderRadius: 4,
                             padding: 2,
-                            boxShadow: 24,
-                            position: 'fixed',
-                            top: 0,
-                            right: 0,
-                            margin: 8,
-                            width: { xs: '90%', md: '400px' }, // Adjust width responsively
+                            boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.2)',
                         },
                         '& .MuiDialogTitle-root': {
-                            backgroundColor: '#1976d2',
+                            backgroundColor: '#1e88e5',
                             color: 'white',
                             padding: '16px 24px',
-                            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                         },
                         '& .MuiDialogContent-root': {
                             padding: 2,
-                        }
+                        },
                     }}
                 >
                     <DialogTitle>
-                        <Typography variant="h6">{selectedProgram.title}</Typography>
+                        <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+                            {selectedProgram.title}
+                        </Typography>
                     </DialogTitle>
                     <DialogContent dividers>
-                        <Typography variant="body1" gutterBottom sx={{ mb: 2 }}>
+                        <Typography variant="body1" gutterBottom sx={{ mb: 2, fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                             {selectedProgram.description}
                         </Typography>
                         <Divider sx={{ mb: 2 }} />
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 1 }}>
+                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#f5f5f5', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             <strong>Code:</strong> {selectedProgram.code}
                         </Typography>
                         <Divider sx={{ mb: 2, mt: 2 }} />
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#e8f5e9', padding: 2, borderRadius: 1 }}>
+                        <Typography variant="body2" sx={{ whiteSpace: 'pre-line', backgroundColor: '#e8f5e9', padding: 2, borderRadius: 2, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             <strong>Algorithm:</strong> {selectedProgram.algorithm}
                         </Typography>
                     </DialogContent>

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
-import SigninForm from './components/SigninForm';
+
 import About from './components/About';
 import Programs from './components/Programs';
 import TechNews from './components/TechNews';
@@ -24,6 +24,7 @@ import NotesUser from './components/User/NotesUser';
 import BooksUser from './components/User/BooksUser';
 import HomePageUser from './components/User/Home-User';
 import NavbarAdmin from './components/Admin/NavBarAdmin';
+import SignIn from './components/SignIn';
 import { Container } from '@mui/material';
 
 
@@ -51,8 +52,8 @@ const App = () => {
         <Container sx={{ marginTop: '80px' }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/signin" element={<SigninForm />} />
-            <Route path="/signup" element={<SigninForm />} />
+            <Route path="/signin" element={<SignIn />} />
+            
             <Route path="/about" element={<About />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/technews" element={<TechNews />} />
